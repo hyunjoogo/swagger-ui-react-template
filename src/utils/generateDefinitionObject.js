@@ -46,7 +46,6 @@ function generateDataType(
     }
   }
   if (property_value.type === "boolean") {
-    console.log(property_value.example);
     if (property_value.example) {
       defObj[modelName][property_name] = property_value.example;
     } else {
@@ -64,7 +63,6 @@ function generateDataType(
     if (property_value.example) {
       defObj[modelName][property_name] = property_value.example;
     } else {
-      console.log(property_value, "a", property_value.items);
       generateDataType(
         property_value.items,
         defObj,

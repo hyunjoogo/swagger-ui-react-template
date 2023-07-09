@@ -3,13 +3,12 @@ let isDarkMode = window.matchMedia("(prefers-color-scheme: dark)");
 
 function updateTheme(theme) {
   theme = theme ?? window.localStorage.theme ?? "system";
-
   if (theme === "dark" || (theme === "system" && isDarkMode.matches)) {
     document.documentElement.classList.add("dark");
   } else if (theme === "light" || (theme === "system" && !isDarkMode.matches)) {
-    console.log("here");
     document.documentElement.classList.remove("dark");
   }
+  console.log(theme);
   return theme;
 }
 
