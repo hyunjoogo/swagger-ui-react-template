@@ -49,6 +49,7 @@ const AppProvider = ({ children }) => {
       alert(e);
     }
 
+    // def객체 생성하기
     const defObj = generateDefinitionObject(newData);
     newData.defObj = defObj;
 

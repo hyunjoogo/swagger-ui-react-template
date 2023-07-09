@@ -9,62 +9,75 @@
 
 export function generateDefinitionObject(json) {
   const defObj = {};
-  Object.keys(json.definitions).forEach((def) => {
-    defObj[def] = {};
-  });
-  for (let definition in json.definitions) {
-    const def_properties = json.definitions[definition].properties;
-    // console.log(def_properties); // properties 객체를 표현
-    for (let property_key in def_properties) {
-      const property_key_value = def_properties[property_key]; // properties의 키의 값
-      changeExample(property_key_value, defObj, definition, property_key);
-      // console.log(property_key); // properties의 key 이름들
+  for (let modelName in json.definitions) {
+    defObj[modelName] = {};
+  }
+
+  for (let modelName in json.definitions) {
+    const model_properties = json.definitions[modelName].properties;
+
+    for (let property_name in model_properties) {
+      const property_value = model_properties[property_name]; // properties의 키의 값
+      generateDataType(property_value, defObj, modelName, property_name);
     }
   }
   return defObj;
 }
 
-function changeExample(key, defObj, definition, property_key, isItem = false) {
-  // key는 property_key_value
-  if (key.type === 'string') {
-    if (key.example) {
-      defObj[definition][property_key] = key.example;
+function generateDataType(
+  property_value,
+  defObj,
+  modelName,
+  property_name,
+  isItem = false
+) {
+  if (property_value.type === "string") {
+    if (property_value.example) {
+      defObj[modelName][property_name] = property_value.example;
     } else {
-      defObj[definition][property_key] = isItem ? ['string'] : 'string';
+      defObj[modelName][property_name] = isItem ? ["string"] : "string";
     }
   }
-  if (key.type === 'integer') {
-    if (key.example) {
-      defObj[definition][property_key] = key.example;
+  if (property_value.type === "integer") {
+    if (property_value.example) {
+      defObj[modelName][property_name] = property_value.example;
     } else {
-      defObj[definition][property_key] = isItem ? [0] : 0;
+      defObj[modelName][property_name] = isItem ? [0] : 0;
     }
   }
-  if (key.type === 'boolean') {
-    if (key.example) {
-      defObj[definition][property_key] = key.example;
+  if (property_value.type === "boolean") {
+    console.log(property_value.example);
+    if (property_value.example) {
+      defObj[modelName][property_name] = property_value.example;
     } else {
-      defObj[definition][property_key] = isItem ? [true] : true;
+      defObj[modelName][property_name] = isItem ? [true] : true;
     }
   }
-  if (key.type === 'number') {
-    if (key.example) {
-      defObj[definition][property_key] = key.example;
+  if (property_value.type === "number") {
+    if (property_value.example) {
+      defObj[modelName][property_name] = property_value.example;
     } else {
-      defObj[definition][property_key] = isItem ? [0.1] : 0.1;
+      defObj[modelName][property_name] = isItem ? [0.1] : 0.1;
     }
   }
-  if (key.type === 'array') {
-    if (key.example) {
-      defObj[definition][property_key] = key.example;
+  if (property_value.type === "array") {
+    if (property_value.example) {
+      defObj[modelName][property_name] = property_value.example;
     } else {
-      changeExample(key.items, defObj, definition, property_key, true);
+      console.log(property_value, "a", property_value.items);
+      generateDataType(
+        property_value.items,
+        defObj,
+        modelName,
+        property_name,
+        true
+      );
     }
   }
-  if (!key.type) {
-    if (key['$ref']) {
-      const def_name = key['$ref'].slice(14); //
-      defObj[definition][property_key] = isItem
+  if (!property_value.type) {
+    if (property_value["$ref"]) {
+      const def_name = property_value["$ref"].slice(14); //
+      defObj[modelName][property_name] = isItem
         ? [defObj[def_name]]
         : defObj[def_name];
     }
