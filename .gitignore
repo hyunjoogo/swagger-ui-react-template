@@ -3,6 +3,9 @@
 # Learn more about .gitignore:
 #     https://www.atlassian.com/git/tutorials/saving-changes/gitignore
 
+# Personal
+BLOG/
+
 # Build
 build
 
@@ -51,4 +54,4 @@ Thumbs.db
 *.mov
 *.wmv
 
-BLOG
+
