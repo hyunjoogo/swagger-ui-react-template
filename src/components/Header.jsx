@@ -58,7 +58,7 @@ const Header = () => {
           {Object.keys(CONFIG.domains).map((domain) => {
             const domainObj = CONFIG.domains[domain];
             return (
-              <option key={domainObj.pathname} value={domainObj.url}>
+              <option key={domainObj.pathname} value={domainObj.pathname}>
                 {domainObj.selectName}
               </option>
             );

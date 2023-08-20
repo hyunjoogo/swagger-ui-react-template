@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { generateDefinitionObject } from "../utils/generateDefinitionObject";
 import Layout from "../components/Layout";
 import axios from "axios";
-import { APIS_URL } from "../consts/url";
 import { transDepsToArray } from "../utils/transDepsToArray";
 import { useLocation, useNavigate } from "react-router-dom";
 import CONFIG from "../consts/config";
@@ -26,8 +25,6 @@ const AppProvider = ({ children }) => {
 
   useEffect(() => {
     let domain = location.pathname.split("/")[1];
-    console.log(domain);
-
     if (domain === "") {
       fetchSwaggerJSON(CONFIG.defaultDomain).then(() =>
         navigate(`/${CONFIG.defaultDomain}`)
@@ -42,7 +39,7 @@ const AppProvider = ({ children }) => {
     try {
       const { data } = await axios({
         method: "get",
-        url: APIS_URL[domainName].url,
+        url: CONFIG.domains[domainName].url,
         responseType: "json",
       });
       newData = { ...data };

@@ -8,7 +8,6 @@ function updateTheme(theme) {
   } else if (theme === "light" || (theme === "system" && !isDarkMode.matches)) {
     document.documentElement.classList.remove("dark");
   }
-  console.log(theme);
   return theme;
 }
 
