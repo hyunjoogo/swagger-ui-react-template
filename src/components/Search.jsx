@@ -5,12 +5,12 @@ import {
   useId,
   useRef,
   useState,
-} from 'react';
-import { Dialog } from '@headlessui/react';
-import clsx from 'clsx';
-import Highlighter from 'react-highlight-words';
-import { AppContext } from '../contexts/AppContext';
-import { Link, useNavigate } from 'react-router-dom';
+} from "react";
+import { Dialog } from "@headlessui/react";
+import clsx from "clsx";
+import Highlighter from "react-highlight-words";
+import { AppContext } from "../contexts/AppContext";
+import { Link, useNavigate } from "react-router-dom";
 
 function SearchIcon(props) {
   return (
@@ -37,8 +37,8 @@ function SearchResult({ focus, result, query, onClose }) {
   return (
     <li
       className={clsx(
-        'results group block cursor-default rounded-lg px-3 py-2 hover:bg-gray-600 focus:bg-gray-600 aria-selected:bg-slate-100 dark:aria-selected:bg-slate-700/30',
-        focus && 'bg-gray-600'
+        "results group block cursor-default rounded-lg px-3 py-2 hover:bg-gray-600 focus:bg-gray-600 aria-selected:bg-slate-100 dark:aria-selected:bg-slate-700/30",
+        focus && "bg-gray-600"
       )}
     >
       <Link to={result.linkTo} onClick={onClose}>
@@ -92,7 +92,7 @@ const SearchInput = forwardRef(function SearchInput(
   { onClose, setInputValue, suggestions, setFocused, focused },
   inputRef
 ) {
-  const arrows = ['ArrowUp', 'ArrowDown'];
+  const arrows = ["ArrowUp", "ArrowDown"];
   const navigate = useNavigate();
   return (
     <div className="group relative flex h-12">
@@ -101,28 +101,22 @@ const SearchInput = forwardRef(function SearchInput(
         ref={inputRef}
         className="flex-auto appearance-none bg-transparent pl-12 text-slate-900 outline-none placeholder:text-slate-400 focus:w-full focus:flex-none dark:text-white sm:text-sm [&::-webkit-search-cancel-button]:hidden [&::-webkit-search-decoration]:hidden [&::-webkit-search-results-button]:hidden [&::-webkit-search-results-decoration]:hidden"
         onKeyDown={(event) => {
-          if (event.key === 'Escape') {
-            document.activeElement?.blur();
-            setInputValue('');
-            onClose();
+          if (event.key === "Enter") {
+            navigate(suggestions[focused].linkTo);
+            event.preventDefault();
+            onClose(false);
           }
           if (arrows.includes(event.key)) {
-            if (event.key === 'ArrowUp') {
+            if (event.key === "ArrowUp") {
               setFocused((prev) =>
                 prev === 0 ? suggestions.length - 1 : prev - 1
               );
             }
-            if (event.key === 'ArrowDown') {
+            if (event.key === "ArrowDown") {
               setFocused((prev) =>
                 prev === suggestions.length - 1 ? 0 : prev + 1
               );
             }
-          }
-          if (event.key === 'Enter') {
-            navigate(suggestions[focused].linkTo);
-            document.activeElement?.blur();
-            setInputValue('');
-            onClose();
           }
         }}
         onChange={(event) => {
@@ -140,7 +134,7 @@ function SearchDialog({ open, setOpen, className }) {
   let inputRef = useRef();
 
   const [focused, setFocused] = useState(0);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
@@ -149,21 +143,21 @@ function SearchDialog({ open, setOpen, className }) {
     }
 
     function onKeyDown(event) {
-      if (event.key === 'k' && (event.metaKey || event.ctrlKey)) {
+      if (event.key === "k" && (event.metaKey || event.ctrlKey)) {
         event.preventDefault();
         setOpen(true);
       }
     }
 
-    window.addEventListener('keydown', onKeyDown);
+    window.addEventListener("keydown", onKeyDown);
 
     return () => {
-      window.removeEventListener('keydown', onKeyDown);
+      window.removeEventListener("keydown", onKeyDown);
     };
   }, [open, setOpen]);
 
   useEffect(() => {
-    if (inputValue === '') {
+    if (inputValue === "") {
       setSuggestions([]);
       return;
     }
@@ -180,10 +174,10 @@ function SearchDialog({ open, setOpen, className }) {
       open={open}
       onClose={() => {
         setOpen(false);
-        setInputValue('');
+        setInputValue("");
         setSuggestions([]);
       }}
-      className={clsx('fixed inset-0 z-50', className)}
+      className={clsx("fixed inset-0 z-50", className)}
     >
       <div className="fixed inset-0 bg-slate-900/50 backdrop-blur" />
 
@@ -196,20 +190,24 @@ function SearchDialog({ open, setOpen, className }) {
               setInputValue={setInputValue}
               focused={focused}
               setFocused={setFocused}
-              onClose={() => setOpen(false)}
+              onClose={() => {
+                setOpen(false);
+                setInputValue("");
+                setSuggestions([]);
+              }}
             />
             <div
               ref={panelRef}
               className="border-t border-slate-200 bg-white px-2 py-3 empty:hidden dark:border-slate-400/10 dark:bg-slate-800"
             >
-              {inputValue !== '' && (
+              {inputValue !== "" && (
                 <SearchResults
                   suggestions={suggestions}
                   focused={focused}
                   query={inputValue}
                   onClose={() => {
                     setOpen(false);
-                    setInputValue('');
+                    setInputValue("");
                     setSuggestions([]);
                   }}
                 />
@@ -251,7 +249,7 @@ export function Search() {
 
   useEffect(() => {
     setModifierKey(
-      /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform) ? '⌘' : 'Ctrl '
+      /(Mac|iPhone|iPod|iPad)/i.test(navigator.platform) ? "⌘" : "Ctrl "
     );
   }, []);
 
