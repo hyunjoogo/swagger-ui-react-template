@@ -93,7 +93,7 @@ const SearchInput = forwardRef(function SearchInput(
   inputRef
 ) {
   const arrows = ["ArrowUp", "ArrowDown"];
-  const navigate = useNavigate();
+
   return (
     <div className="group relative flex h-12">
       <SearchIcon className="pointer-events-none absolute left-4 top-0 h-full w-5 fill-slate-400 dark:fill-slate-500" />
@@ -102,9 +102,9 @@ const SearchInput = forwardRef(function SearchInput(
         className="flex-auto appearance-none bg-transparent pl-12 text-slate-900 outline-none placeholder:text-slate-400 focus:w-full focus:flex-none dark:text-white sm:text-sm [&::-webkit-search-cancel-button]:hidden [&::-webkit-search-decoration]:hidden [&::-webkit-search-results-button]:hidden [&::-webkit-search-results-decoration]:hidden"
         onKeyDown={(event) => {
           if (event.key === "Enter") {
-            navigate(suggestions[focused].linkTo);
+            // navigate(suggestions[focused].linkTo);
             event.preventDefault();
-            onClose(false);
+            onClose(suggestions[focused].linkTo);
           }
           if (arrows.includes(event.key)) {
             if (event.key === "ArrowUp") {
@@ -130,6 +130,7 @@ const SearchInput = forwardRef(function SearchInput(
 
 function SearchDialog({ open, setOpen, className }) {
   const { summaryList } = useContext(AppContext);
+  const navigate = useNavigate();
   let panelRef = useRef();
   let inputRef = useRef();
 
@@ -190,7 +191,8 @@ function SearchDialog({ open, setOpen, className }) {
               setInputValue={setInputValue}
               focused={focused}
               setFocused={setFocused}
-              onClose={() => {
+              onClose={(target) => {
+                navigate(target);
                 setOpen(false);
                 setInputValue("");
                 setSuggestions([]);
