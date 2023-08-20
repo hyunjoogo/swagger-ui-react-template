@@ -26,6 +26,7 @@ const AppProvider = ({ children }) => {
 
   useEffect(() => {
     let domain = location.pathname.split("/")[1];
+    console.log(domain);
 
     if (domain === "") {
       fetchSwaggerJSON(CONFIG.defaultDomain).then(() =>

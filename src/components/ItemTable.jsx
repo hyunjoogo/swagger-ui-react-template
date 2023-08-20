@@ -31,7 +31,6 @@ const ItemTable = ({
         </thead>
         <tbody>
           {tableData.map((row, index) => {
-            console.log(row);
             return (
               <tr key={index}>
                 {headers.map((key, index) => {

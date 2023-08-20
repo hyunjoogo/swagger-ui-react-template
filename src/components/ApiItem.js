@@ -32,7 +32,6 @@ const ApiItem = ({ method, uri, methodData }) => {
         body.push(param);
       }
     });
-    console.log(header);
     setParamData({ header, path, query, body });
   }, []);
 

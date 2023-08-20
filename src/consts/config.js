@@ -17,7 +17,7 @@ const CONFIG = {
   },
   delimiter: "|",
   defaultDomain: "petstore",
-  // 기본 URL. 마지막에 '/' 붙이지 말 것
+  // 기본 URL. Summary별 복사에 사용됩니다. 마지막에 '/' 붙이지 마세요.
   defaultSiteDomain: "https://swagger-ui-react-template.netlify.app",
 };
 
