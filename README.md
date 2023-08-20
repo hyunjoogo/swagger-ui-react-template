@@ -1,5 +1,5 @@
 # swagger-ui-react-template
-Swagger.json을 디자인과 검색기능을 강화한 template입니다.   
+Swagge.json에 디자인과 기능을 추가한 템플릿입니다.  
 
 ## 주요 기능
 
