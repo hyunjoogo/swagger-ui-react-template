@@ -17,7 +17,8 @@ const CONFIG = {
   },
   delimiter: "|",
   defaultDomain: "petstore",
-  defaultSiteDomain: "http://localhost:3000", // 기본 URL. 마지막에 '/' 붙이지 말 것
+  // 기본 URL. 마지막에 '/' 붙이지 말 것
+  defaultSiteDomain: "https://swagger-ui-react-template.netlify.app",
 };
 
 export default CONFIG;
